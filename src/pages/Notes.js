@@ -50,6 +50,17 @@ const Notes = () => {
     )
   }
 
+  const getModalView = () => {
+    switch (modalType) {
+      case 'archived':
+        return getArchivedView();
+      case 'new':
+        return getNewNoteView();
+      case 'edit':
+        return getEditNoteView();
+    }
+  }
+
   return (
     <Grid px={4} py={1} bgcolor='#EAEEF3'>
       <List
@@ -76,24 +87,10 @@ const Notes = () => {
         </Button>
       </Stack>
       <List items={notes} type='summary' />
-      {modalType === 'archived' &&
+      {modalType?.length &&
         <ModalView
           isOpen={true}
-          content={getArchivedView()}
-          onClose={() => setModalType()}
-        />
-      }
-      {modalType === 'new' &&
-        <ModalView
-          isOpen={true}
-          content={getNewNoteView()}
-          onClose={() => setModalType()}
-        />
-      }
-      {modalType === 'edit' &&
-        <ModalView
-          isOpen={true}
-          content={getEditNoteView()}
+          content={getModalView()}
           onClose={() => setModalType()}
         />
       }
